@@ -14,4 +14,14 @@ def parse_cmd(cmd: str):
     if len(res1) != 0:
         return res1[0].split(" ")
 
+    par2 = re.compile(r"通过\d*")
+    res2 = par2.findall(cmd)
+    if len(res2) != 0:
+        return res2[0].split(" ")
+
+    par3 = re.compile(r"拒绝\d*")
+    res3 = par3.findall(cmd)
+    if len(res3) != 0:
+        return res3[0].split(" ")
+
     return "error",-1

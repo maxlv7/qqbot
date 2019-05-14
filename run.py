@@ -13,7 +13,11 @@ app = Flask(__name__)
 app.config.update(config)
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
+def hint():
+    return jsonify(status=1,msg="OK")
+
+@app.route('/qqbot', methods=["POST"])
 def index():
     msg = request.get_data().decode()
     res = get_json(msg)
@@ -65,4 +69,4 @@ from app.api import api
 
 app.register_blueprint(api)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
