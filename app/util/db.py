@@ -4,7 +4,7 @@ from log import botLog
 
 
 # 配置数据库文件位置
-db_source = ''
+db_source = '/home/production/qqbot/qqbot.db'
 
 class DbUtils():
 

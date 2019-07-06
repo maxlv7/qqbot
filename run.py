@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from gevent.pywsgi import WSGIServer
 
 from app.util.data_format import data_format_forward
 from app.util.db import DbUtils
@@ -10,7 +11,7 @@ from log import botLog
 from push.push import push_msg_group
 from sdk import HTTPSDK
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder="upload")
 app.config.update(config)
 CORS(app)
 
@@ -73,4 +74,5 @@ from app.api import api
 
 app.register_blueprint(api)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    http_server = WSGIServer(('0.0.0.0', 5000), app)
+    http_server.serve_forever()

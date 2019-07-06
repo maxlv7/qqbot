@@ -16,3 +16,7 @@ def get_random_filename() -> str:
     min = time.localtime(time.time()).tm_min
     rnum = random.randint(10000, 99999)
     return "{}{}{}{}{}{}".format(year, month, day, hour, min, rnum)
+
+
+def to_online_pic(img: str):
+    return "http://120.78.216.241/upload/" + img[img.rfind('/') + 1:]

@@ -42,7 +42,10 @@ def get_info():
 
         if 'file' in request.files:
             file = request.files['file']
-            filename = os.path.join(app.config['UPLOAD_FOLDER'], "{}.jpg".format(get_random_filename()))
+            upload_folder = os.path.join(app.config['UPLOAD_FOLDER'])
+            if not os.path.exists(upload_folder):
+                os.mkdir(upload_folder)
+            filename = os.path.join(upload_folder, "{}.jpg".format(get_random_filename()))
             file.save(filename)
 
         # 有图片
@@ -57,5 +60,5 @@ def get_info():
                 botLog.info("成功写入id({})".format(id))
                 # TODO 转发到相关qq群中(主动推送)
                 # TODO 队列，保证一定能转发成功和应对高并发
-                push_msg_group(data_format(id,title,content,filename),app.config["JUDGE_GROUP"])
+                push_msg_group(data_format(id, title, content, filename), app.config["JUDGE_GROUP"])
         return jsonify(code=1, msg="提交成功!")
