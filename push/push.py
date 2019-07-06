@@ -17,6 +17,8 @@ import json
 import requests
 from flask import current_app as app
 
+from log import botLog
+
 push_data = {
     # "time": '',
     # "verify": "",
@@ -51,7 +53,7 @@ def push_msg_private(msg: str, private: str):
     try:
         requests.post(app.config["PUSH_URL"], headers=headers, data=data)
     except Exception as e:
-        pass
+        botLog.error("请求插件失败!")
 
 
 def push_msg_group(msg: str, group: str):
@@ -64,7 +66,7 @@ def push_msg_group(msg: str, group: str):
     try:
         requests.post(app.config["PUSH_URL"], headers=headers, data=data)
     except Exception as e:
-        pass
+        botLog.error("请求插件失败!")
 
 
 if __name__ == '__main__':

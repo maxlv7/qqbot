@@ -3,6 +3,9 @@ import sqlite3
 from log import botLog
 
 
+# 配置数据库文件位置
+db_source = ''
+
 class DbUtils():
 
     def __init__(self):
@@ -10,7 +13,7 @@ class DbUtils():
         self._cursor = None
     def __enter__(self):
         try:
-            self._conn = sqlite3.connect("D:\Programing\python\qqbot\qqbot.db")
+            self._conn = sqlite3.connect(db_source)
             self._cursor = self._conn.cursor()
             return self._conn.cursor()
         except Exception as e:

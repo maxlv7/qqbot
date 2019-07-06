@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from app.util.data_format import data_format_forward
 from app.util.db import DbUtils
@@ -11,11 +12,13 @@ from sdk import HTTPSDK
 
 app = Flask(__name__)
 app.config.update(config)
+CORS(app)
 
 
 @app.route('/')
 def hint():
-    return jsonify(status=1,msg="OK")
+    return jsonify(status=1, msg="OK")
+
 
 @app.route('/qqbot', methods=["POST"])
 def index():
@@ -33,10 +36,11 @@ def index():
                 with DbUtils() as c:
                     enable = c.execute("SELECT enable FROM information WHERE id={}".format(value)).fetchone()
                 if enable is None:
-                    sdk.sendGroupMsg(app.config["JUDGE_GROUP"],"[ksust,at:qq={}] 参数错误! ".format(res.get("QQ")))
+                    sdk.sendGroupMsg(app.config["JUDGE_GROUP"], "[ksust,at:qq={}] 参数错误! ".format(res.get("QQ")))
                     return sdk.send()
                 if int(enable[0]) == 1:
-                    sdk.sendGroupMsg(app.config["JUDGE_GROUP"], "[ksust,at:qq={}] {}已经审核过了! ".format(res.get("QQ"), value))
+                    sdk.sendGroupMsg(app.config["JUDGE_GROUP"],
+                                     "[ksust,at:qq={}] {}已经审核过了! ".format(res.get("QQ"), value))
                 else:
                     with DbUtils() as c:
                         c.execute("UPDATE information SET enable = 1 WHERE ID = {}".format(value))
