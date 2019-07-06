@@ -5,23 +5,23 @@ from log import botLog
 def data_format(id: str, title: str, content: str, img: str = None) -> str:
     if img is None:
         data = \
-            '''
-            审核编号:【{}】
-            标题：{}
-            内容：{}
-            通过请回复 通过+编号
-            拒绝请回复 拒绝+编号
-            如：通过 1'''.format(id, title, content)
+'''
+审核编号:【{}】
+标题：{}
+内容：{}
+通过请回复 通过+编号
+拒绝请回复 拒绝+编号
+如：通过 1'''.format(id, title, content)
     else:
         data = \
-            '''
-            审核编号:【{}】
-            标题：{}
-            内容：{}
-            图片: [ksust,image:pic={}]
-            通过请回复 通过+编号
-            拒绝请回复 拒绝+编号
-            如：通过 1'''.format(id, title, content, to_online_pic(img))
+'''
+审核编号:【{}】
+标题：{}
+内容：{}
+图片: [ksust,image:pic={}]
+通过请回复 通过+编号
+拒绝请回复 拒绝+编号
+如：通过 1'''.format(id, title, content, to_online_pic(img))
     botLog.info(to_online_pic(img))
     return data
 

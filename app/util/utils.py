@@ -19,4 +19,4 @@ def get_random_filename() -> str:
 
 
 def to_online_pic(img: str):
-    return "http://120.78.216.241/upload/" + img[img.rfind('/') + 1:]
+    return "http://120.78.216.241:5000/upload/" + img[img.rfind('/') + 1:]
