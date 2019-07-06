@@ -22,7 +22,7 @@ def data_format(id: str, title: str, content: str, img: str = None) -> str:
 通过请回复 通过+编号
 拒绝请回复 拒绝+编号
 如：通过 1'''.format(id, title, content, to_online_pic(img))
-    botLog.info(to_online_pic(img))
+        botLog.info(to_online_pic(img))
     return data
 
 

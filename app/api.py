@@ -8,6 +8,7 @@ from app.util.utils import get_random_filename
 from log import botLog
 from push.push import push_msg_group
 
+from mythread import e
 api = Blueprint("api", __name__, url_prefix='/api/v1')
 
 
@@ -20,6 +21,7 @@ def get_info():
         if res != None:
             title = res["title"]
             content = res["content"]
+            print(title,content)
 
             with DbUtils() as c:
                 c.execute(
@@ -29,7 +31,8 @@ def get_info():
                 botLog.info("成功写入id({})".format(id))
                 # TODO 转发到相关qq群中(主动推送)
                 # TODO 队列，保证一定能转发成功和应对高并发的
-                push_msg_group(data_format(id, title, content), app.config["JUDGE_GROUP"])
+
+                e.submit(push_msg_group(data_format(id, title, content), app.config["JUDGE_GROUP"]))
             return jsonify(code=1, msg="提交成功!")
 
         # 文字+图片
@@ -60,5 +63,5 @@ def get_info():
                 botLog.info("成功写入id({})".format(id))
                 # TODO 转发到相关qq群中(主动推送)
                 # TODO 队列，保证一定能转发成功和应对高并发
-                push_msg_group(data_format(id, title, content, filename), app.config["JUDGE_GROUP"])
+                e.submit(push_msg_group(data_format(id, title, content, filename), app.config["JUDGE_GROUP"]))
         return jsonify(code=1, msg="提交成功!")

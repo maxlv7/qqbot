@@ -4,7 +4,8 @@ from log import botLog
 
 
 # 配置数据库文件位置
-db_source = '/home/production/qqbot/qqbot.db'
+db_source_production = '/home/production/qqbot/qqbot.db'
+db_source_development = r'D:\Programing\qqbot\qqbot.db'
 
 class DbUtils():
 
@@ -13,7 +14,7 @@ class DbUtils():
         self._cursor = None
     def __enter__(self):
         try:
-            self._conn = sqlite3.connect(db_source)
+            self._conn = sqlite3.connect(db_source_production)
             self._cursor = self._conn.cursor()
             return self._conn.cursor()
         except Exception as e:
