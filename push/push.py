@@ -72,7 +72,7 @@ def push_msg_group(msg: str, group: str):
 def push_msg_temp(msg: str, obj_qq: str):
     data = copy.deepcopy(push_data)
     data["data"][0]["Type"] = 4
-    data["data"][0]["Group"] = obj_qq
+    data["data"][0]["QQ"] = obj_qq
     data["data"][0]["Msg"] = msg
 
     data = json.dumps(data)
