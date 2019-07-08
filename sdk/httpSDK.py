@@ -68,3 +68,7 @@ class HTTPSDK():
     def handleFriendAdd(self, qq, agree=True, msg=''):
         return self.__addDataCell(types.TYPE_FRIEND_HANDLE_FRIEND_ADD, 0, 0, '',
                                   qq, '1' if agree else '0', msg, 0)
+
+    def sendTempMsg(self, qq, msg, structureType=0, subType=0):
+        return self.__addDataCell(types.TYPE_GROUP_TEMP, subType, structureType, '',
+                                  qq, msg, '', 0)
