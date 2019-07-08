@@ -8,8 +8,9 @@ from app.util.parse_cmd import parse_cmd
 from app.util.utils import get_json
 from config import config
 from log import botLog
-from push.push import push_msg_group
+from push.push import push_msg_group, push_msg_temp
 from sdk import HTTPSDK
+from mythread import e
 
 app = Flask(__name__, static_folder="upload")
 app.config.update(config)
@@ -38,14 +39,11 @@ def index():
         return sdk.send()
     # 群临时消息
     if res.get("Type") == '4':
-        sdk = HTTPSDK(res)
         msg = "机器人自动回复的引导信息：校友你好，学长现在大三了，因为学习时间紧就找朋友一起研发了单纯发布的小程序，你的信息可以直接发布在群里，另外系统也相对规范一下嘛，感谢支持啦。用微信扫一扫下面的二维码就可以发布了，（另外同学你发布的信息不能违法违规哦，违规信息字眼系统检测到之后会自动屏蔽哦）"
         msg2 = "[ksust,image:pic=http://120.78.216.241:5000/upload/qrcode.png]"
 
-        sdk.sendPrivateMsg(qq=res.get("QQ"), msg=msg)
-        sdk.sendPrivateMsg(qq=res.get("QQ"), msg=msg2)
-
-        return sdk.send()
+        e.submit(push_msg_temp(res.get("QQ"), msg))
+        e.submit(push_msg_temp(res.get("QQ"), msg2))
 
     if res.get("Type") == '100':
         sdk = HTTPSDK(res)

@@ -53,7 +53,7 @@ def push_msg_private(msg: str, private: str):
     try:
         requests.post(app.config["PUSH_URL"], headers=headers, data=data)
     except Exception as e:
-        botLog.error("请求插件失败!")
+        botLog.error("插件问题再现!")
 
 
 def push_msg_group(msg: str, group: str):
@@ -66,7 +66,20 @@ def push_msg_group(msg: str, group: str):
     try:
         requests.post(app.config["PUSH_URL"], headers=headers, data=data)
     except Exception as e:
-        botLog.error("请求插件失败!")
+        botLog.error("插件问题再现!")
+
+
+def push_msg_temp(msg: str, obj_qq: str):
+    data = copy.deepcopy(push_data)
+    data["data"][0]["Type"] = 4
+    data["data"][0]["Group"] = obj_qq
+    data["data"][0]["Msg"] = msg
+
+    data = json.dumps(data)
+    try:
+        requests.post(app.config["PUSH_URL"], headers=headers, data=data)
+    except Exception as e:
+        botLog.error("插件问题再现!")
 
 
 if __name__ == '__main__':
